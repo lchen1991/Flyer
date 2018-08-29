@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:background="#7F000000"
+    android:background="@color/bg_black"
     android:orientation="vertical">
     <!-- TODO merge -->
     <LinearLayout
@@ -14,48 +14,44 @@
         android:orientation="horizontal"
         android:padding="1dp">
 
-        <ToggleButton
-            android:id="@+id/tb_mode"
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/view_move"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:textOff="Logcat"
-            android:textOn="CLog"
-            android:textSize="8sp" />
+            android:src="@drawable/ic_menu_move" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/view_keyword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/tb_mode"
+            android:layout_marginLeft="@dimen/global_margin_normal"
+            android:layout_marginRight="@dimen/global_margin_normal"
             android:layout_weight="1"
-            android:hint="keyword" />
+            android:textColor="@color/header_keyword"
+            tools:text="com.ttdevs.float.log" />
 
         <Spinner
             android:id="@+id/spLevel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+            android:layout_width="@dimen/header_level_width"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/global_margin_normal"
+            android:background="@null"
+            android:popupBackground="@color/header_level_bg" />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/view_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:src="@android:drawable/ic_menu_close_clear_cancel" />
+            android:layout_marginLeft="@dimen/global_margin_normal"
+            android:src="@drawable/ic_menu_close" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@android:color/black" />
+    <include layout="@layout/view_divider_gray" />
 
     <HorizontalScrollView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/global_margin_normal">
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_log"
@@ -64,6 +60,7 @@
             android:gravity="bottom"
             android:scrollbarFadeDuration="5000"
             android:scrollbars="vertical"
+            android:textColor="@color/log_content"
             tools:text="This is log context!" />
     </HorizontalScrollView>
 </LinearLayout>

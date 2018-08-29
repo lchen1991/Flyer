@@ -4,6 +4,12 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="global_divider_gray">#9FFFFFFF</color>
     <color name="bg_black">#9F000000</color>
-    <color name="header_keyword">#9FFFFFFF</color>
+    <color name="header_keyword">#FFFFFFFF</color>
+    <color name="header_level_text">#FFFFFFFF</color>
+    <color name="header_level_bg">@android:color/transparent</color>
+    <color name="header_level_item_text">#BF000000</color>
+    <color name="header_level_item_bg">#FFFFFFFF</color>
+    <color name="log_content">#FFFFFFFF</color>
 </resources>

@@ -15,11 +15,9 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.ToggleButton;
 
 import com.ttdevs.floatlog.R;
 import com.ttdevs.floatlog.utils.LogcatUtil;
@@ -35,12 +33,21 @@ public class FloatWindow extends LinearLayout {
     private int mY, mTouchSlop;
     private String mLogLevel = "Verbose";
 
-    private View viewHeader;
-    private ToggleButton tbMode;
+    private View viewMove;
     private AppCompatTextView viewKeyword;
     private Spinner spLevel;
     private View viewClose;
     private AppCompatTextView tvLog;
+
+    private LogcatUtil mLogcat;
+
+    private Handler mHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void dispatchMessage(Message msg) {
+            // TODO: 2018/8/29  内存控制
+            tvLog.append(msg.obj.toString());
+        }
+    };
 
     public FloatWindow(Context context, int y) {
         super(context);
@@ -53,28 +60,15 @@ public class FloatWindow extends LinearLayout {
     }
 
     private void initView(Context context) {
-        inflate(context, R.layout.window_float, this);
+        inflate(context, R.layout.layout_window_float, this);
 
-        viewHeader = findViewById(R.id.view_header);
-        tbMode = findViewById(R.id.tb_mode);
+        viewMove = findViewById(R.id.view_move);
         viewKeyword = findViewById(R.id.view_keyword);
         spLevel = findViewById(R.id.spLevel);
         viewClose = findViewById(R.id.view_close);
         tvLog = findViewById(R.id.tv_log);
         tvLog.setMovementMethod(ScrollingMovementMethod.getInstance());
 
-        tbMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                spLevel.setVisibility(isChecked ? View.GONE : View.VISIBLE);
-
-                if (isChecked) {
-                    showCLog();
-                } else {
-                    showLogcat();
-                }
-            }
-        });
         viewClose.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,8 +78,8 @@ public class FloatWindow extends LinearLayout {
 
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
                 R.array.logcat_level,
-                android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.layout.item_logcat_level);
+        adapter.setDropDownViewResource(R.layout.item_logcat_level_item);
         spLevel.setAdapter(adapter);
         spLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -99,7 +93,7 @@ public class FloatWindow extends LinearLayout {
             }
         });
 
-        viewHeader.setOnTouchListener(new View.OnTouchListener() {
+        viewMove.setOnTouchListener(new View.OnTouchListener() {
             private float downX, downY;
             private float lastY;
 
@@ -137,6 +131,8 @@ public class FloatWindow extends LinearLayout {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        showLogcat();
     }
 
     public void dismiss() {
@@ -145,6 +141,8 @@ public class FloatWindow extends LinearLayout {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        closeLogcat();
     }
 
     private WindowManager.LayoutParams getWindowLayoutParams() {
@@ -164,29 +162,19 @@ public class FloatWindow extends LinearLayout {
         return mLayoutParams;
     }
 
-    private Handler mHandler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void dispatchMessage(Message msg) {
-            tvLog.append(msg.obj.toString());
-        }
-    };
-
-    private LogcatUtil mLogcat;
 
     private void showLogcat() {
+        closeLogcat();
+
         String keyword = viewKeyword.getText().toString();
-        if (null != mLogcat) {
-            mLogcat.quit();
-            mLogcat = null;
-        }
         mLogcat = new LogcatUtil(mHandler, keyword, mLogLevel);
         mLogcat.start();
     }
 
-    private void showCLog() {
-        if(null != mLogcat){
+    private void closeLogcat() {
+        if (null != mLogcat) {
             mLogcat.quit();
+            mLogcat = null;
         }
-
     }
 }
