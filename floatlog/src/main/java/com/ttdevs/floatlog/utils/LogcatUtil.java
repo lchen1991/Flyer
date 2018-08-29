@@ -2,6 +2,7 @@ package com.ttdevs.floatlog.utils;
 
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,20 +22,26 @@ public class LogcatUtil extends Thread {
 
     public LogcatUtil(Handler handler, String keyword, String logLevel) {
         mHandler = handler;
-        mKeyword = keyword;
         mLogLevel = logLevel;
+        mKeyword = keyword;
+
+        if (TextUtils.isEmpty(mKeyword)) {
+            mKeyword = "*";
+        }
     }
 
     @Override
     public void run() {
+        Process process = null;
         BufferedReader bufferedReader = null;
         try {
-            String cmd = String.format("logcat ", mKeyword, mLogLevel);
-            Process process = Runtime.getRuntime().exec(cmd);
+            String cmd = String.format("logcat %s:%s", mKeyword, mLogLevel);
+            process = Runtime.getRuntime().exec(cmd);
             bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         } catch (IOException e) {
             e.printStackTrace();
             isQuit = true;
+            return;
         }
         while (!isQuit()) {
             try {
@@ -44,9 +51,15 @@ public class LogcatUtil extends Thread {
                 e.printStackTrace();
             }
         }
+        try {
+            bufferedReader.close();
+            process.destroy();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void sendMessage(String msgString){
+    private void sendMessage(String msgString) {
         Message msg = mHandler.obtainMessage();
         msg.what = 0;
         msg.obj = msgString;

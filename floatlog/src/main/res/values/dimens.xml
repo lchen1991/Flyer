@@ -6,6 +6,11 @@
     <dimen name="global_margin_small">2dp</dimen>
     <dimen name="global_margin_normal">4dp</dimen>
     <dimen name="global_margin_large">8dp</dimen>
+
+    <dimen name="window_height">240dp</dimen>
+
     <dimen name="header_level_width">64dp</dimen>
     <dimen name="header_level_item">16sp</dimen>
+
+    <dimen name="log_content_size">12sp</dimen>
 </resources>

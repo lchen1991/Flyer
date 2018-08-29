@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -84,7 +85,18 @@ public class FloatWindow extends LinearLayout {
         spLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mLogLevel = String.valueOf(adapter.getItem(position));
+                CharSequence level = adapter.getItem(position);
+                mLogLevel = String.valueOf(level.charAt(0));
+                showLogcat();
+
+                Log.v("v>>>>>", mLogLevel);
+                Log.d("d>>>>>", mLogLevel);
+                Log.i("i>>>>>", mLogLevel);
+                Log.w("w>>>>>", mLogLevel);
+                Log.e("e>>>>>", mLogLevel);
+                Log.wtf("wtf>>>>>", mLogLevel);
+
+                System.out.println(mLogLevel);
             }
 
             @Override
