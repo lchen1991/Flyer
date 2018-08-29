@@ -34,6 +34,7 @@
             android:layout_marginRight="@dimen/global_margin_normal"
             android:layout_weight="1"
             android:text="*"
+            android:gravity="center_vertical"
             android:textColor="@color/header_keyword"
             tools:text="com.ttdevs.float.log" />
 

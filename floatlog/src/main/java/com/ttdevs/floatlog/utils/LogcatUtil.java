@@ -36,6 +36,7 @@ public class LogcatUtil extends Thread {
         BufferedReader bufferedReader = null;
         try {
             String cmd = String.format("logcat %s:%s", mKeyword, mLogLevel);
+            System.err.println(">>>>>" + cmd);
             process = Runtime.getRuntime().exec(cmd);
             bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         } catch (IOException e) {
