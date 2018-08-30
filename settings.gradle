@@ -1,1 +1,1 @@
-include ':app', ':floatlog'
+include ':app', ':flyer'

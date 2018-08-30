@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
-import com.ttdevs.floatlog.FloatLog;
+import com.ttdevs.flyer.Flyer;
 
 /**
  * @author ttdevs
@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
-            FloatLog.showWindow();
+            Flyer.showWindow();
         } else {
-            FloatLog.dismissWindow();
+            Flyer.dismissWindow();
         }
     }
 
