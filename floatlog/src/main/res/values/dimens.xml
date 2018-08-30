@@ -3,6 +3,7 @@
 
     <dimen name="global_divider_size">1px</dimen>
 
+    <dimen name="global_margin_tiny">1dp</dimen>
     <dimen name="global_margin_small">2dp</dimen>
     <dimen name="global_margin_normal">4dp</dimen>
     <dimen name="global_margin_large">8dp</dimen>

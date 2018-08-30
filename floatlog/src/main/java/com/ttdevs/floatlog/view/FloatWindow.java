@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -43,6 +44,7 @@ public class FloatWindow extends LinearLayout {
     private TextView viewKeyword;
     private Spinner spLevel;
     private View viewClean;
+    private CheckBox cbScroll;
     private View viewClose;
     private RecyclerView rvLog;
 
@@ -83,6 +85,7 @@ public class FloatWindow extends LinearLayout {
         spLevel = findViewById(R.id.spLevel);
         viewKeyword = findViewById(R.id.view_keyword);
         viewClean = findViewById(R.id.view_clean);
+        cbScroll = findViewById(R.id.cb_scroll);
         viewClose = findViewById(R.id.view_close);
         rvLog = findViewById(R.id.rv_log);
         rvLog.setLayoutManager(new LinearLayoutManager(mContext));
@@ -216,11 +219,9 @@ public class FloatWindow extends LinearLayout {
         mDataList.add(log);
         mAdapter.notifyDataSetChanged();
 
-        if(rvLog.getL){
-
+        if(cbScroll.isChecked()){
+            rvLog.scrollToPosition(mDataList.size() - 1);
         }
-
-        rvLog.scrollToPosition(mDataList.size() - 1);
     }
 
     private void clearLog() {
