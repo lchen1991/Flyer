@@ -6,22 +6,25 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v7.widget.AppCompatTextView;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.ttdevs.floatlog.R;
+import com.ttdevs.floatlog.adapter.LogAdapter;
+import com.ttdevs.floatlog.utils.Constant;
 import com.ttdevs.floatlog.utils.LogcatUtil;
+
+import java.util.ArrayList;
 
 /**
  * @author ttdevs
@@ -29,47 +32,69 @@ import com.ttdevs.floatlog.utils.LogcatUtil;
  */
 public class FloatWindow extends LinearLayout {
     public static final int MARGIN_LEFT = 10;
+
+    private Context mContext;
     private WindowManager mWindowManager;
     private WindowManager.LayoutParams mLayoutParams = new WindowManager.LayoutParams();
-    private int mY, mTouchSlop;
-    private String mLogLevel = "Verbose";
+    private int mY;
+    private String mLogLevel = "V";
 
     private View viewMove;
-    private AppCompatTextView viewKeyword;
+    private TextView viewKeyword;
     private Spinner spLevel;
+    private View viewClean;
     private View viewClose;
-    private AppCompatTextView tvLog;
+    private RecyclerView rvLog;
+
+    private ArrayList<String> mDataList = new ArrayList<>();
+    private LogAdapter mAdapter;
 
     private LogcatUtil mLogcat;
 
     private Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void dispatchMessage(Message msg) {
-            // TODO: 2018/8/29  内存控制
-            tvLog.append(msg.obj.toString());
+            switch (msg.what) {
+                case Constant.KEY_LOG_MESSAGE:
+                    updateLog(msg.obj.toString());
+                    break;
+
+                default:
+                    break;
+            }
         }
     };
 
     public FloatWindow(Context context, int y) {
         super(context);
 
-        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+        mContext = context;
+
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         mY = y;
 
-        initView(context);
+        initView();
     }
 
-    private void initView(Context context) {
-        inflate(context, R.layout.layout_window_float, this);
+    private void initView() {
+        inflate(mContext, R.layout.layout_window_float, this);
 
         viewMove = findViewById(R.id.view_move);
-        viewKeyword = findViewById(R.id.view_keyword);
         spLevel = findViewById(R.id.spLevel);
+        viewKeyword = findViewById(R.id.view_keyword);
+        viewClean = findViewById(R.id.view_clean);
         viewClose = findViewById(R.id.view_close);
-        tvLog = findViewById(R.id.tv_log);
-        tvLog.setMovementMethod(ScrollingMovementMethod.getInstance());
+        rvLog = findViewById(R.id.rv_log);
+        rvLog.setLayoutManager(new LinearLayoutManager(mContext));
+        rvLog.setAdapter(mAdapter = new LogAdapter(mContext, mDataList));
 
+        viewClean.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDataList.clear();
+                mAdapter.notifyDataSetChanged();
+            }
+        });
         viewClose.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +102,12 @@ public class FloatWindow extends LinearLayout {
             }
         });
 
-        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
+        initSpinner();
+        initMoveWindow();
+    }
+
+    private void initSpinner() {
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mContext,
                 R.array.logcat_level,
                 R.layout.item_logcat_level);
         adapter.setDropDownViewResource(R.layout.item_logcat_level_item);
@@ -88,15 +118,6 @@ public class FloatWindow extends LinearLayout {
                 CharSequence level = adapter.getItem(position);
                 mLogLevel = String.valueOf(level.charAt(0));
                 showLogcat();
-
-                Log.v("v>>>>>", mLogLevel);
-                Log.d("d>>>>>", mLogLevel);
-                Log.i("i>>>>>", mLogLevel);
-                Log.w("w>>>>>", mLogLevel);
-                Log.e("e>>>>>", mLogLevel);
-                Log.wtf("wtf>>>>>", mLogLevel);
-
-                System.out.println(mLogLevel);
             }
 
             @Override
@@ -104,16 +125,16 @@ public class FloatWindow extends LinearLayout {
 
             }
         });
+    }
 
+    private void initMoveWindow() {
         viewMove.setOnTouchListener(new View.OnTouchListener() {
-            private float downX, downY;
-            private float lastY;
+            private float downY, lastY;
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        downX = event.getRawX();
                         downY = event.getRawY();
                         lastY = downY;
                         break;
@@ -124,9 +145,7 @@ public class FloatWindow extends LinearLayout {
                         lastY = event.getRawY();
                         break;
                     case MotionEvent.ACTION_UP:
-                        if (Math.abs(event.getRawX() - downX) < mTouchSlop && Math.abs(event.getRawY() - downY) < mTouchSlop) {
-                            // TODO: 2018/8/29
-                        }
+
                         break;
 
                     default:
@@ -166,7 +185,7 @@ public class FloatWindow extends LinearLayout {
         } else {
             mLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
         }
-        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
         mLayoutParams.format = PixelFormat.TRANSLUCENT;
         mLayoutParams.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
         mLayoutParams.x = MARGIN_LEFT;
@@ -179,7 +198,8 @@ public class FloatWindow extends LinearLayout {
         closeLogcat();
 
         String keyword = viewKeyword.getText().toString();
-        mLogcat = new LogcatUtil(mHandler, keyword, mLogLevel);
+        String cmd = String.format("logcat %s:%s", keyword, mLogLevel);
+        mLogcat = new LogcatUtil(mHandler, cmd);
         mLogcat.start();
     }
 
@@ -188,5 +208,23 @@ public class FloatWindow extends LinearLayout {
             mLogcat.quit();
             mLogcat = null;
         }
+
+        clearLog();
+    }
+
+    private void updateLog(String log) {
+        mDataList.add(log);
+        mAdapter.notifyDataSetChanged();
+
+        if(rvLog.getL){
+
+        }
+
+        rvLog.scrollToPosition(mDataList.size() - 1);
+    }
+
+    private void clearLog() {
+        mDataList.clear();
+        mAdapter.notifyDataSetChanged();
     }
 }

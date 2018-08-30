@@ -18,52 +18,52 @@
             android:id="@+id/view_move"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/global_margin_small"
             android:src="@drawable/ic_menu_move" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="|"
-            android:textColor="@android:color/white" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/view_keyword"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/global_margin_normal"
-            android:layout_marginRight="@dimen/global_margin_normal"
-            android:layout_weight="1"
-            android:text="*"
-            android:gravity="center_vertical"
-            android:textColor="@color/header_keyword"
-            tools:text="com.ttdevs.float.log" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/global_margin_normal"
-            android:text="|"
-            android:textColor="@android:color/white" />
+        <include layout="@layout/view_divider_vertical_white" />
 
         <Spinner
             android:id="@+id/spLevel"
             android:layout_width="@dimen/header_level_width"
             android:layout_height="wrap_content"
-
+            android:layout_marginLeft="@dimen/global_margin_small"
+            android:layout_marginRight="@dimen/global_margin_small"
             android:background="@null"
             android:popupBackground="@color/header_level_bg" />
 
-        <TextView
+        <include layout="@layout/view_divider_vertical_white" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/view_keyword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/global_margin_small"
+            android:layout_marginRight="@dimen/global_margin_small"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:text="*"
+            android:textColor="@color/header_keyword"
+            tools:text="com.ttdevs.float.log" />
+
+        <include layout="@layout/view_divider_vertical_white" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/view_clean"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="|"
-            android:textColor="@android:color/white" />
+            android:layout_marginLeft="@dimen/global_margin_small"
+            android:layout_marginRight="@dimen/global_margin_small"
+            android:src="@drawable/ic_menu_refresh" />
+
+        <include layout="@layout/view_divider_vertical_white" />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/view_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/global_margin_normal"
+            android:layout_marginLeft="@dimen/global_margin_small"
             android:src="@drawable/ic_menu_close" />
     </LinearLayout>
 
@@ -72,17 +72,11 @@
     <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:padding="@dimen/global_margin_normal">
+        android:padding="@dimen/global_margin_small">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/tv_log"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_log"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="bottom"
-            android:scrollbarFadeDuration="5000"
-            android:scrollbars="vertical"
-            android:textColor="@color/log_content"
-            android:textSize="@dimen/log_content_size"
-            tools:text="This is log context!" />
+            android:layout_height="match_parent" />
     </HorizontalScrollView>
 </LinearLayout>

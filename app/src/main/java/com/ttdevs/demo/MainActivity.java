@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
@@ -43,6 +44,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void run() {
         System.out.println(">>>>>" + System.currentTimeMillis());
+        System.err.println("<<<<<" + System.currentTimeMillis());
+
+        Log.v("v>>>>>", "verbose");
+        Log.d("d>>>>>", "debug");
+        Log.i("i>>>>>", "info");
+        Log.w("w>>>>>", "warn");
+        Log.e("e>>>>>", "error");
+        Log.wtf("wtf>>>>>", "assert");
 
         mHandler.postDelayed(this, REPEAT_INTERVAL);
     }
