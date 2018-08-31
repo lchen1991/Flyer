@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ToggleButton
-        android:id="@+id/tb_operate"
+    <Button
+        android:id="@+id/bt_open"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textOff="打开"
-        android:textOn="关闭" />
+        android:onClick="onClick"
+        android:text="打开" />
 
     <Button
         android:id="@+id/bt_second"

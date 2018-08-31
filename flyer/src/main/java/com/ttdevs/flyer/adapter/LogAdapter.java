@@ -44,9 +44,11 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
         String[] items = logString.split(" ");
 
         ForegroundColorSpan colorSpan = Constant.LOG_COLOR_SPAN.get('I');
-        if (items.length > 4) {
-            char flag = items[4].toCharArray()[0];
-            colorSpan = Constant.LOG_COLOR_SPAN.get(flag);
+        if (items.length >= 5) {
+            if (items[4].length() > 0) {
+                char flag = items[4].toCharArray()[0];
+                colorSpan = Constant.LOG_COLOR_SPAN.get(flag);
+            }
         }
 
         SpannableStringBuilder builder = new SpannableStringBuilder();

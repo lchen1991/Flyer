@@ -6,18 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.ToggleButton;
 
 import com.ttdevs.flyer.Flyer;
 
 /**
  * @author ttdevs
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, Runnable {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, Runnable {
     public static final int REPEAT_INTERVAL = 2000;
-
-    private ToggleButton tbOperate;
 
     private Handler mHandler = new Handler();
 
@@ -26,19 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tbOperate = findViewById(R.id.tb_operate);
-        tbOperate.setOnCheckedChangeListener(this);
-
         mHandler.postDelayed(this, REPEAT_INTERVAL);
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
-            Flyer.showWindow();
-        } else {
-            Flyer.dismissWindow();
-        }
     }
 
     @Override
@@ -58,6 +42,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        startActivity(new Intent(this, SecondActivity.class));
+        switch (v.getId()) {
+            case R.id.bt_open:
+                Flyer.showWindow();
+                break;
+            case R.id.bt_second:
+                startActivity(new Intent(this, SecondActivity.class));
+                break;
+            default:
+                break;
+        }
     }
 }
