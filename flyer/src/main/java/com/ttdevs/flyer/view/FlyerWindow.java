@@ -217,11 +217,13 @@ public class FlyerWindow extends LinearLayout {
 
     private void updateLog(String log) {
         mDataList.add(log);
-        mAdapter.notifyDataSetChanged();
+
 
         if(cbScroll.isChecked()){
             rvLog.scrollToPosition(mDataList.size() - 1);
         }
+
+        mAdapter.notifyDataSetChanged();
     }
 
     private void clearLog() {

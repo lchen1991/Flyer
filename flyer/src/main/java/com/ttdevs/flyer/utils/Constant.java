@@ -31,4 +31,16 @@ public class Constant {
     };
 
     public static final int KEY_LOG_MESSAGE = 0x01;
+
+
+    /**
+     * 08-31 18:26:49.429  2391  2391 I log content
+     * I
+     */
+    public static final int INDEX_LOG_LEVEL = 4;
+    /**
+     * 08-31 18:26:49.429  2391  2391 I log content
+     * log content
+     */
+    public static final int INDEX_LOG_CONTENT = 5;
 }

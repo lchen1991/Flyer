@@ -13,7 +13,7 @@
     <color name="header_level_item_bg">#FFFFFFFF</color>
     <color name="log_content">#FFFFFFFF</color>
 
-    <color name="log_level_verbose">#FFBBBBBB</color>
+    <color name="log_level_verbose">#FFFFFFFF</color>
     <color name="log_level_debug">#FF0070BB</color>
     <color name="log_level_info">#FF48BB31</color>
     <color name="log_level_warn">#FFBBBB23</color>

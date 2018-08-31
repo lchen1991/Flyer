@@ -37,6 +37,7 @@ public class LogcatUtil extends Thread {
             isQuit = true;
             return;
         }
+
         while (!isQuit()) {
             try {
                 String line = bufferedReader.readLine();
@@ -45,12 +46,19 @@ public class LogcatUtil extends Thread {
                 e.printStackTrace();
             }
         }
+
         try {
             bufferedReader.close();
             process.destroy();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+//        try {
+//            Runtime.getRuntime().exec("logcat -c");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void sendMessage(String msgString) {
