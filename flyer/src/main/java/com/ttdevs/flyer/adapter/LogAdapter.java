@@ -50,10 +50,10 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
 
         String[] items = logString.split("\\s+");
 
-        ForegroundColorSpan colorSpan = new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.log_level_verbose));
-        if (items.length >= INDEX_LOG_LEVEL) {
-            if (items[INDEX_LOG_CONTENT].length() > 0) {
-                char flag = items[INDEX_LOG_CONTENT].toCharArray()[0];
+        ForegroundColorSpan colorSpan = Constant.LOG_COLOR_SPAN.get('I');
+        if (items.length >= INDEX_LOG_CONTENT) {
+            if (items[INDEX_LOG_LEVEL].length() > 0) {
+                char flag = items[INDEX_LOG_LEVEL].toCharArray()[0];
                 colorSpan = Constant.LOG_COLOR_SPAN.get(flag);
             }
         }
