@@ -18,7 +18,7 @@
             android:id="@+id/view_move"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_menu_move" />
+            android:src="@drawable/ic_menu_icon" />
 
         <include layout="@layout/view_divider_vertical_white" />
 
@@ -48,21 +48,20 @@
             android:id="@+id/view_clean"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_menu_refresh" />
+            android:src="@drawable/ic_menu_restore" />
 
         <include layout="@layout/view_divider_vertical_white" />
 
         <CheckBox
             android:id="@+id/cb_scroll"
-            style="@style/CheckBoxScroll"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:button="@drawable/menu_scroll_selector" />
 
         <include layout="@layout/view_divider_vertical_white" />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/view_close"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_menu_close" />

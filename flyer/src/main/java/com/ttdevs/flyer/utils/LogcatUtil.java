@@ -54,11 +54,11 @@ public class LogcatUtil extends Thread {
             e.printStackTrace();
         }
 
-//        try {
-//            Runtime.getRuntime().exec("logcat -c");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Runtime.getRuntime().exec("logcat -c");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void sendMessage(String msgString) {
