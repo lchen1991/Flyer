@@ -55,7 +55,8 @@
             android:id="@+id/cb_scroll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:button="@drawable/menu_scroll_selector" />
+            android:button="@drawable/menu_scroll_selector"
+            android:checked="true" />
 
         <include layout="@layout/view_divider_vertical_white" />
 

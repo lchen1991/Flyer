@@ -51,4 +51,14 @@ public class Constant {
      * log content
      */
     public static final int INDEX_LOG_CONTENT = 5;
+    /**
+     * 内存中最多的日志条数
+     */
+    public static final int MAX_LOG_SIZE = 20000;
+    /**
+     * 到达最大日志条数后，每次删除条数
+     */
+    public static final int DELETE_LOG_SIZE = 4000;
+
+    public static final int EVERY_PRINT_LOG = 2000;
 }

@@ -13,33 +13,34 @@ import com.ttdevs.flyer.Flyer;
  * @author ttdevs
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, Runnable {
-    public static final int REPEAT_INTERVAL = 2000;
 
     private Handler mHandler = new Handler();
+    private int mInterval = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mHandler.postDelayed(this, REPEAT_INTERVAL);
+        mHandler.postDelayed(this, mInterval);
     }
 
     @Override
     public void run() {
 
-        Log.v(">>>>>", "verbose");
-        Log.d(">>>>>", "debug");
-        Log.i(">>>>>", "info");
-        Log.w(">>>>>", "warn");
-        Log.e(">>>>>", "error");
-        Log.wtf(">>>>>", "assert");
-
         System.err.println(">>>>>" + System.currentTimeMillis());
+        for (int i = 0; i < 100; i++) {
+            Log.v(">>>>>", "verbose");
+            Log.d(">>>>>", "debug");
+            Log.i(">>>>>", "info");
+            Log.w(">>>>>", "warn");
+            Log.e(">>>>>", "error");
+            Log.wtf(">>>>>", "assert");
+            Log.v(">>>>>", "========================");
+        }
         System.out.println(">>>>>" + System.currentTimeMillis());
-        Log.v(">>>>>", "========================");
 
-        mHandler.postDelayed(this, REPEAT_INTERVAL);
+        mHandler.postDelayed(this, mInterval);
     }
 
     @Override
@@ -48,6 +49,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_open:
                 Flyer.show();
                 break;
+            case R.id.bt_fast:
+                mInterval = 2;
+                break;
+            case R.id.bt_slow:
+                mInterval = 2 * 1000;
+                break;
+
             case R.id.bt_second:
                 startActivity(new Intent(this, SecondActivity.class));
                 break;

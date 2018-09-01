@@ -27,7 +27,10 @@ import com.ttdevs.flyer.utils.LogcatUtil;
 
 import java.util.ArrayList;
 
+import static com.ttdevs.flyer.utils.Constant.DELETE_LOG_SIZE;
+import static com.ttdevs.flyer.utils.Constant.EVERY_PRINT_LOG;
 import static com.ttdevs.flyer.utils.Constant.FLYER_MARGIN_LEFT;
+import static com.ttdevs.flyer.utils.Constant.MAX_LOG_SIZE;
 
 /**
  * @author ttdevs
@@ -225,6 +228,15 @@ public class FlyerWindow extends LinearLayout {
     private void updateLog(String log) {
         mDataList.add(log);
 
+        if (mDataList.size() > MAX_LOG_SIZE) {
+            for (int i = 0; i < DELETE_LOG_SIZE; i++) {
+                mDataList.remove(i);
+            }
+        }
+
+        if (mDataList.size() % EVERY_PRINT_LOG == 0) {
+            System.err.println(String.format(">>>> Log size:" + mDataList.size()));
+        }
 
         if (cbScroll.isChecked()) {
             rvLog.scrollToPosition(mDataList.size() - 1);
