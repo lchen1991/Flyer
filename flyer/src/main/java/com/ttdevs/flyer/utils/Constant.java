@@ -33,9 +33,12 @@ public class Constant {
     public static final int KEY_LOG_MESSAGE = 0x01;
 
     /**
-     *
+     * window 上边距
      */
     public static final int FLYER_MARGIN_TOP = 200 * 3;
+    /**
+     * window 左边距
+     */
     public static final int FLYER_MARGIN_LEFT = 4 * 3;
 
     /**

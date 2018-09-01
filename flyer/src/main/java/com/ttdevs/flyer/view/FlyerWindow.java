@@ -189,7 +189,8 @@ public class FlyerWindow extends LinearLayout {
         } else {
             mLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
         }
-        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+
+        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         mLayoutParams.format = PixelFormat.TRANSLUCENT;
         mLayoutParams.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
         mLayoutParams.x = FLYER_MARGIN_LEFT;
@@ -216,6 +217,11 @@ public class FlyerWindow extends LinearLayout {
         clearLog();
     }
 
+    private void clearLog() {
+        mDataList.clear();
+        mAdapter.notifyDataSetChanged();
+    }
+
     private void updateLog(String log) {
         mDataList.add(log);
 
@@ -224,11 +230,6 @@ public class FlyerWindow extends LinearLayout {
             rvLog.scrollToPosition(mDataList.size() - 1);
         }
 
-        mAdapter.notifyDataSetChanged();
-    }
-
-    private void clearLog() {
-        mDataList.clear();
         mAdapter.notifyDataSetChanged();
     }
 }
