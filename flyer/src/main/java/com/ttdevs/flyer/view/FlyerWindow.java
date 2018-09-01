@@ -27,20 +27,21 @@ import com.ttdevs.flyer.utils.LogcatUtil;
 
 import java.util.ArrayList;
 
+import static com.ttdevs.flyer.utils.Constant.FLYER_MARGIN_LEFT;
+
 /**
  * @author ttdevs
  * 2018-08-28 17:01
  */
 public class FlyerWindow extends LinearLayout {
-    public static final int MARGIN_LEFT = 10;
-
     private Context mContext;
+    private int mY;
+
     private WindowManager mWindowManager;
     private WindowManager.LayoutParams mLayoutParams = new WindowManager.LayoutParams();
-    private int mY;
     private String mLogLevel = "V";
 
-    private View viewMove;
+    private View viewIcon;
     private TextView viewKeyword;
     private Spinner spLevel;
     private View viewClean;
@@ -71,17 +72,17 @@ public class FlyerWindow extends LinearLayout {
         super(context);
 
         mContext = context;
+        mY = y;
 
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        mY = y;
 
         initView();
     }
 
     private void initView() {
-        inflate(mContext, R.layout.layout_window_float, this);
+        inflate(mContext, R.layout.layout_flyer_window, this);
 
-        viewMove = findViewById(R.id.view_move);
+        viewIcon = findViewById(R.id.view_icon);
         spLevel = findViewById(R.id.spLevel);
         viewKeyword = findViewById(R.id.view_keyword);
         viewClean = findViewById(R.id.view_clean);
@@ -112,8 +113,8 @@ public class FlyerWindow extends LinearLayout {
     private void initSpinner() {
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mContext,
                 R.array.logcat_level,
-                R.layout.item_logcat_level);
-        adapter.setDropDownViewResource(R.layout.item_logcat_level_item);
+                R.layout.view_logcat_level);
+        adapter.setDropDownViewResource(R.layout.item_logcat_level);
         spLevel.setAdapter(adapter);
         spLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -131,7 +132,7 @@ public class FlyerWindow extends LinearLayout {
     }
 
     private void initMoveWindow() {
-        viewMove.setOnTouchListener(new View.OnTouchListener() {
+        viewIcon.setOnTouchListener(new View.OnTouchListener() {
             private float downY, lastY;
 
             @Override
@@ -181,7 +182,7 @@ public class FlyerWindow extends LinearLayout {
 
     private WindowManager.LayoutParams getWindowLayoutParams() {
         mLayoutParams.width = FrameLayout.LayoutParams.MATCH_PARENT;
-        mLayoutParams.height = FrameLayout.LayoutParams.WRAP_CONTENT;
+        mLayoutParams.height = (int) getResources().getDimension(R.dimen.window_height);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             mLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
@@ -191,7 +192,7 @@ public class FlyerWindow extends LinearLayout {
         mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
         mLayoutParams.format = PixelFormat.TRANSLUCENT;
         mLayoutParams.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
-        mLayoutParams.x = MARGIN_LEFT;
+        mLayoutParams.x = FLYER_MARGIN_LEFT;
         mLayoutParams.y = mY;
         return mLayoutParams;
     }
@@ -219,7 +220,7 @@ public class FlyerWindow extends LinearLayout {
         mDataList.add(log);
 
 
-        if(cbScroll.isChecked()){
+        if (cbScroll.isChecked()) {
             rvLog.scrollToPosition(mDataList.size() - 1);
         }
 

@@ -27,15 +27,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void run() {
-        System.out.println(">>>>>" + System.currentTimeMillis());
-        System.err.println("<<<<<" + System.currentTimeMillis());
 
-        Log.v("v>>>>>", "verbose");
-        Log.d("d>>>>>", "debug");
-        Log.i("i>>>>>", "info");
-        Log.w("w>>>>>", "warn");
-        Log.e("e>>>>>", "error");
-        Log.wtf("wtf>>>>>", "assert");
+        Log.v(">>>>>", "verbose");
+        Log.d(">>>>>", "debug");
+        Log.i(">>>>>", "info");
+        Log.w(">>>>>", "warn");
+        Log.e(">>>>>", "error");
+        Log.wtf(">>>>>", "assert");
+
+        System.err.println(">>>>>" + System.currentTimeMillis());
+        System.out.println(">>>>>" + System.currentTimeMillis());
+        Log.v(">>>>>", "========================");
 
         mHandler.postDelayed(this, REPEAT_INTERVAL);
     }
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_open:
-                Flyer.showWindow();
+                Flyer.show();
                 break;
             case R.id.bt_second:
                 startActivity(new Intent(this, SecondActivity.class));

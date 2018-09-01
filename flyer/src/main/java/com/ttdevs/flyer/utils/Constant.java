@@ -32,6 +32,11 @@ public class Constant {
 
     public static final int KEY_LOG_MESSAGE = 0x01;
 
+    /**
+     *
+     */
+    public static final int FLYER_MARGIN_TOP = 200 * 3;
+    public static final int FLYER_MARGIN_LEFT = 4 * 3;
 
     /**
      * 08-31 18:26:49.429  2391  2391 I log content

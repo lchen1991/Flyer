@@ -2,20 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/window_height"
+    android:layout_height="match_parent"
     android:background="@color/bg_black"
     android:orientation="vertical">
     <!-- TODO merge -->
     <LinearLayout
-        android:id="@+id/view_header"
+        android:id="@+id/view_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="1dp">
+        android:padding="@dimen/global_margin_small">
 
         <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/view_move"
+            android:id="@+id/view_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_menu_icon" />
@@ -26,8 +26,7 @@
             android:id="@+id/spLevel"
             android:layout_width="@dimen/header_level_width"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:popupBackground="@color/header_level_bg" />
+            android:background="@null" />
 
         <include layout="@layout/view_divider_vertical_white" />
 
@@ -72,7 +71,7 @@
     <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:padding="@dimen/global_margin_tiny">
+        android:padding="@dimen/global_margin_small">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_log"
