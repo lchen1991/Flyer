@@ -2,7 +2,7 @@
 
 一个在界面上展示Logcat日志信息的工具类。
 
-![Flyer](doc/flyer.jpeg)
+![Flyer](docs/flyer.jpeg)
 
 ## 使用
 
@@ -10,10 +10,10 @@
 - 打开：`Flyer.show();`
 - 关闭：`Flyer.dismiss();`
 - 操作：
-    - ![Icon](doc/ic_icon.png)：上下移动窗口
-    - ![Restore](doc/ic_restore.png)：清空日志
-    - ![Lock](doc/ic_lock.png)：打开/关闭自动滚动
-    - ![Icon](doc/ic_close.png)：关闭窗口
+    - ![Icon](docs/ic_icon.png)：上下移动窗口
+    - ![Restore](docs/ic_restore.png)：清空日志
+    - ![Lock](docs/ic_lock.png)：打开/关闭自动滚动
+    - ![Icon](docs/ic_close.png)：关闭窗口
 
 ## 功能
 
