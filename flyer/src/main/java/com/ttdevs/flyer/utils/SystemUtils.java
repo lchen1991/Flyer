@@ -24,6 +24,7 @@ public class SystemUtils {
 
     @TargetApi(Build.VERSION_CODES.M)
     public static void requestGrantOverlay(Context context) {
+        // I/ActivityManager: START u0 {act=android.settings.action.MANAGE_OVERLAY_PERMISSION dat=package:com.ttdevs.demo flg=0x10008000 cmp=com.android.settings/.Settings$AppDrawOverlaySettingsActivity} from uid 1000 pid -1
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + context.getPackageName()));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
