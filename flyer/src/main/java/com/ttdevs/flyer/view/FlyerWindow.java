@@ -22,8 +22,10 @@ import android.widget.TextView;
 
 import com.ttdevs.flyer.R;
 import com.ttdevs.flyer.adapter.LogAdapter;
+import com.ttdevs.flyer.utils.ActivityStack;
 import com.ttdevs.flyer.utils.Constant;
 import com.ttdevs.flyer.utils.LogcatUtil;
+import com.ttdevs.flyer.utils.SystemUtils;
 
 import java.util.ArrayList;
 
@@ -42,6 +44,38 @@ public class FlyerWindow extends LinearLayout {
 
     private WindowManager mWindowManager;
     private WindowManager.LayoutParams mLayoutParams = new WindowManager.LayoutParams();
+
+//    static {
+//        WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+//
+//        mLayoutParams.width = FrameLayout.LayoutParams.MATCH_PARENT;
+//        mLayoutParams.height = (int) getResources().getDimension(R.dimen.window_height);
+//
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) { // TYPE_PHONE
+//            mLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+//        } else {
+//            mLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+//        }
+//
+//        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+//        mLayoutParams.format = PixelFormat.TRANSLUCENT; // RGBA_8888
+//        mLayoutParams.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+//        mLayoutParams.x = FLYER_MARGIN_LEFT;
+//        mLayoutParams.y = mY;
+//
+//        params.x = 0;
+//        params.y = 0;
+//        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+//        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//        params.gravity = Gravity.LEFT | Gravity.TOP;
+//        params.type = WindowManager.LayoutParams.TYPE_PHONE;
+//        params.format = PixelFormat.RGBA_8888;
+//        params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+//                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+//
+//        mLayoutParams = params;
+//    }
+
     private String mLogLevel = "V";
 
     private View viewIcon;
@@ -51,25 +85,12 @@ public class FlyerWindow extends LinearLayout {
     private CheckBox cbScroll;
     private View viewClose;
     private RecyclerView rvLog;
+    private TextView tvTopActivity;
 
     private ArrayList<String> mDataList = new ArrayList<>();
     private LogAdapter mAdapter;
 
     private LogcatUtil mLogcat;
-
-    private Handler mHandler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void dispatchMessage(Message msg) {
-            switch (msg.what) {
-                case Constant.KEY_LOG_MESSAGE:
-                    updateLog(msg.obj.toString());
-                    break;
-
-                default:
-                    break;
-            }
-        }
-    };
 
     public FlyerWindow(Context context, int y) {
         super(context);
@@ -80,6 +101,13 @@ public class FlyerWindow extends LinearLayout {
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
         initView();
+
+        ActivityStack.addTopActivityChangeListener(new ActivityStack.OnTopActivityChangeListener() {
+            @Override
+            public void onTopActivityChange(String activity) {
+                tvTopActivity.setText(activity);
+            }
+        });
     }
 
     private void initView() {
@@ -91,6 +119,7 @@ public class FlyerWindow extends LinearLayout {
         viewClean = findViewById(R.id.view_clean);
         cbScroll = findViewById(R.id.cb_scroll);
         viewClose = findViewById(R.id.view_close);
+        tvTopActivity = findViewById(R.id.tv_top_activity);
         rvLog = findViewById(R.id.rv_log);
         rvLog.setLayoutManager(new LinearLayoutManager(mContext));
         rvLog.setAdapter(mAdapter = new LogAdapter(mContext, mDataList));
@@ -169,7 +198,7 @@ public class FlyerWindow extends LinearLayout {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        tvTopActivity.setText(SystemUtils.getTopActivity());
         showLogcat();
     }
 
@@ -187,14 +216,14 @@ public class FlyerWindow extends LinearLayout {
         mLayoutParams.width = FrameLayout.LayoutParams.MATCH_PARENT;
         mLayoutParams.height = (int) getResources().getDimension(R.dimen.window_height);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) { // TYPE_PHONE
             mLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
         } else {
             mLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
         }
 
-        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-        mLayoutParams.format = PixelFormat.TRANSLUCENT;
+        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+        mLayoutParams.format = PixelFormat.TRANSLUCENT; // RGBA_8888
         mLayoutParams.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
         mLayoutParams.x = FLYER_MARGIN_LEFT;
         mLayoutParams.y = mY;
@@ -225,8 +254,23 @@ public class FlyerWindow extends LinearLayout {
         mAdapter.notifyDataSetChanged();
     }
 
-    private void updateLog(String log) {
-        mDataList.add(log);
+    private Handler mHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void dispatchMessage(Message msg) {
+            switch (msg.what) {
+                case Constant.KEY_LOG_MESSAGE:
+                    String logMsg = msg.obj.toString();
+                    updateLog(logMsg);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    };
+
+    private void updateLog(String logMsg) {
+        mDataList.add(logMsg);
 
         if (mDataList.size() > MAX_LOG_SIZE) {
             for (int i = 0; i < DELETE_LOG_SIZE; i++) {

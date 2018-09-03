@@ -29,15 +29,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void run() {
 
         System.err.println(">>>>>" + System.currentTimeMillis());
-        for (int i = 0; i < 100; i++) {
-            Log.v(">>>>>", "verbose");
-            Log.d(">>>>>", "debug");
-            Log.i(">>>>>", "info");
-            Log.w(">>>>>", "warn");
-            Log.e(">>>>>", "error");
-            Log.wtf(">>>>>", "assert");
-            Log.v(">>>>>", "========================");
-        }
+//        for (int i = 0; i < 100; i++) {
+//            Log.v(">>>>>", "verbose");
+//            Log.d(">>>>>", "debug");
+//            Log.i(">>>>>", "info");
+//            Log.w(">>>>>", "warn");
+//            Log.e(">>>>>", "error");
+//            Log.wtf(">>>>>", "assert");
+//            Log.v(">>>>>", "========================");
+//        }
         System.out.println(">>>>>" + System.currentTimeMillis());
 
         mHandler.postDelayed(this, mInterval);

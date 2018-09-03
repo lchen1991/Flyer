@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.github.anrwatchdog.ANRError;
 import com.github.anrwatchdog.ANRWatchDog;
+import com.ttdevs.flyer.Flyer;
 
 /**
  * @author ttdevs
@@ -13,6 +14,8 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Flyer.init(this);
 
         new ANRWatchDog().setANRListener(new ANRWatchDog.ANRListener() {
             @Override

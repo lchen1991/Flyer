@@ -1,5 +1,6 @@
 package com.ttdevs.flyer;
 
+import com.ttdevs.flyer.utils.ActivityStack;
 import com.ttdevs.flyer.utils.Application;
 import com.ttdevs.flyer.utils.Constant;
 import com.ttdevs.flyer.utils.SystemUtils;
@@ -16,13 +17,16 @@ public class Flyer {
 
     }
 
+    public static void init(android.app.Application application) {
+        ActivityStack.register(application);
+    }
+
     public synchronized static void show() {
         if (!SystemUtils.requestPermission()) {
             return;
         }
         if (null == mFloatWindow) {
-            mFloatWindow = new FlyerWindow(Application.getApplicationContext(),
-                    Constant.FLYER_MARGIN_TOP);
+            mFloatWindow = new FlyerWindow(Application.getApplicationContext(), Constant.FLYER_MARGIN_TOP);
         }
         mFloatWindow.show();
     }
