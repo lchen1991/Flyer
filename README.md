@@ -2,7 +2,7 @@
 
 一个在界面上展示Logcat日志信息的工具类。
 
-![Flyer](docs/flyer1.jpeg)
+![Flyer](docs/flyer1.png)
 
 ## 使用
 
