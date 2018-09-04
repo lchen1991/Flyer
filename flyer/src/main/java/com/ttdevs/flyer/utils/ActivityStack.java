@@ -4,6 +4,9 @@ package com.ttdevs.flyer.utils;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +30,12 @@ public class ActivityStack {
 
             @Override
             public void onActivityResumed(Activity activity) {
-                if (mListener.size() > 0) {
-                    for (OnTopActivityChangeListener listener : mListener) {
-                        listener.onTopActivityChange(activity.getClass().getName());
-                    }
+                for (OnTopActivityChangeListener listener : mListener) {
+                    listener.onTopActivityChange(activity.getClass().getName());
+                }
+
+                if (activity instanceof FragmentActivity) {
+                    registerFragmentLifecycleCallbacks((FragmentActivity) activity);
                 }
             }
 
@@ -52,6 +57,38 @@ public class ActivityStack {
             @Override
             public void onActivityDestroyed(Activity activity) {
 
+            }
+
+            private void registerFragmentLifecycleCallbacks(final FragmentActivity activity) {
+                final FragmentManager manager = activity.getSupportFragmentManager();
+                manager.registerFragmentLifecycleCallbacks(new FragmentManager.FragmentLifecycleCallbacks() {
+
+                    @Override
+                    public void onFragmentResumed(FragmentManager fm, Fragment f) {
+                        super.onFragmentResumed(fm, f);
+
+                        updateVisibleStatus();
+                    }
+
+                    @Override
+                    public void onFragmentPaused(FragmentManager fm, Fragment f) {
+                        super.onFragmentPaused(fm, f);
+
+                        updateVisibleStatus();
+                    }
+
+                    private void updateVisibleStatus() {
+                        for (Fragment fragment : manager.getFragments()) {
+                            if (fragment.getUserVisibleHint()) {
+                                String result = String.format("%s/%s", activity.getClass().getName(), fragment.getClass().getSimpleName());
+                                for (OnTopActivityChangeListener listener : mListener) {
+                                    listener.onTopActivityChange(result);
+                                }
+                            }
+                        }
+                    }
+
+                }, true);
             }
         });
     }

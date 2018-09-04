@@ -76,7 +76,7 @@
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/global_margin_small">
+            android:padding="@dimen/global_margin_normal">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_log"
@@ -90,6 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/global_margin_normal"
             android:gravity="right"
             android:textColor="@color/log_content"
             tools:text="com.ttdevs.demo/.SecondActivity" />

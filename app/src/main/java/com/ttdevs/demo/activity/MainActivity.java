@@ -1,12 +1,12 @@
-package com.ttdevs.demo;
+package com.ttdevs.demo.activity;
 
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
+import com.ttdevs.demo.R;
 import com.ttdevs.flyer.Flyer;
 
 /**
@@ -27,8 +27,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void run() {
-
-        System.err.println(">>>>>" + System.currentTimeMillis());
+//        System.err.println(">>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(">>>>>" + System.currentTimeMillis());
+//        System.err.println(">>>>>>>>>>>>>>>>>>>>>>>");
 //        for (int i = 0; i < 100; i++) {
 //            Log.v(">>>>>", "verbose");
 //            Log.d(">>>>>", "debug");
@@ -36,11 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            Log.w(">>>>>", "warn");
 //            Log.e(">>>>>", "error");
 //            Log.wtf(">>>>>", "assert");
-//            Log.v(">>>>>", "========================");
 //        }
-        System.out.println(">>>>>" + System.currentTimeMillis());
-
-        mHandler.postDelayed(this, mInterval);
+//        mHandler.postDelayed(this, mInterval);
     }
 
     @Override
