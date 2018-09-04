@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,22 @@ import java.util.List;
  */
 public class ActivityStack {
 
+    private ActivityStack() {
+
+    }
+
     public static void register(android.app.Application application) {
+        if (null == application) {
+            return;
+        }
+        try {
+            Class.forName("android.support.v4.app.FragmentManager$FragmentLifecycleCallbacks");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(application, "Android support package version is low.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         application.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
