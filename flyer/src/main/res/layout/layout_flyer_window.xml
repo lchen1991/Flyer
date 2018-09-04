@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_black"
+    android:background="@color/global_bg_black"
     android:orientation="vertical">
 
     <LinearLayout
@@ -86,12 +86,14 @@
 
         <TextView
             android:id="@+id/tv_top_activity"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/global_margin_normal"
+            android:padding="@dimen/global_margin_small"
+            android:layout_margin="@dimen/global_margin_small"
             android:gravity="right"
+            android:background="@color/activity_bg_black"
             android:textColor="@color/log_content"
             tools:text="com.ttdevs.demo/.SecondActivity" />
 

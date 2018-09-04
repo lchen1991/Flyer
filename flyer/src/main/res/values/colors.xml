@@ -5,7 +5,8 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="global_divider_gray">#9FFFFFFF</color>
-    <color name="bg_black">#9F000000</color>
+    <color name="global_bg_black">#9F000000</color>
+    <color name="activity_bg_black">#5F000000</color>
     <color name="header_keyword">#FFFFFFFF</color>
     <color name="header_level_text">#FFFFFFFF</color>
     <color name="header_level_bg">@android:color/transparent</color>

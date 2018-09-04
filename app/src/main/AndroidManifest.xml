@@ -20,7 +20,9 @@
         <activity
             android:name=".activity.SecondActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.ThirdActivity"></activity>
+        <activity
+            android:name=".activity.ThirdActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

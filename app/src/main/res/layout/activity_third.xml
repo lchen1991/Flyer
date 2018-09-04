@@ -6,17 +6,26 @@
     android:orientation="vertical"
     tools:context=".activity.ThirdActivity">
 
-    <Button
-        android:id="@+id/bt_finish"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="Finish" />
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/bt_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:onClick="onClick"
+            android:text="Finish" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"

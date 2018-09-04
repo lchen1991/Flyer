@@ -2,7 +2,7 @@
 
 一个在界面上展示Logcat日志信息的工具类。
 
-![Flyer](docs/flyer.jpeg)
+![Flyer](docs/flyer1.jpeg)
 
 ## 使用
 
@@ -27,11 +27,10 @@
     - 展示当前Activity/Fragment(暂支持v4)
     
 - TODO
-    - 通过关键字过滤日志
     - 调整窗口大小
+    - 通过关键字过滤日志
     - 保存日志
     - 拷贝日志
-    -
     - ...
 
 ## Other
@@ -43,7 +42,8 @@
 
 ## Reference
 
-- [UETool](https://github.com/eleme/UETool/)
+- [UETool](https://github.com/eleme/UETool)
+- [ActivityTaskView](https://github.com/rome753/ActivityTaskView)
 - [Logcat](https://developer.android.com/studio/command-line/logcat)
 
 ## License: MIT
