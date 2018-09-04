@@ -86,6 +86,7 @@ public class FlyerWindow extends LinearLayout {
     private View viewClose;
     private RecyclerView rvLog;
     private TextView tvTopActivity;
+    private View viewChangeHeight;
 
     private ArrayList<String> mDataList = new ArrayList<>();
     private LogAdapter mAdapter;
@@ -122,6 +123,7 @@ public class FlyerWindow extends LinearLayout {
         cbScroll = findViewById(R.id.cb_scroll);
         viewClose = findViewById(R.id.view_close);
         tvTopActivity = findViewById(R.id.tv_top_activity);
+        viewChangeHeight = findViewById(R.id.view_change_height);
         rvLog = findViewById(R.id.rv_log);
         rvLog.setLayoutManager(new LinearLayoutManager(mContext));
         rvLog.setAdapter(mAdapter = new LogAdapter(mContext, mDataList));
@@ -142,6 +144,7 @@ public class FlyerWindow extends LinearLayout {
 
         initSpinner();
         initMoveWindow();
+        initChangeHeight();
     }
 
     private void initSpinner() {
@@ -179,6 +182,34 @@ public class FlyerWindow extends LinearLayout {
                     case MotionEvent.ACTION_MOVE:
                         mLayoutParams.y += event.getRawY() - lastY;
                         mLayoutParams.y = Math.max(0, mLayoutParams.y);
+                        mWindowManager.updateViewLayout(FlyerWindow.this, mLayoutParams);
+                        lastY = event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_UP:
+
+                        break;
+
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
+    private void initChangeHeight() {
+        viewChangeHeight.setOnTouchListener(new OnTouchListener() {
+            private float downY, lastY;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        downY = event.getRawY();
+                        lastY = downY;
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        mLayoutParams.height += (event.getRawY() - lastY);
                         mWindowManager.updateViewLayout(FlyerWindow.this, mLayoutParams);
                         lastY = event.getRawY();
                         break;
