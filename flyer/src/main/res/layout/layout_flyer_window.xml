@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_black"
     android:orientation="vertical">
-    <!-- TODO merge -->
+
     <LinearLayout
         android:id="@+id/view_menu"
         android:layout_width="match_parent"
@@ -69,20 +69,31 @@
 
     <include layout="@layout/view_divider_gray" />
 
-    <TextView
-        android:id="@+id/tv_top_activity"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="com.ttdevs.demo/.SecondActivity" />
+        android:layout_height="match_parent">
 
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:padding="@dimen/global_margin_small">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_log"
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </HorizontalScrollView>
-</LinearLayout>
+            android:layout_height="match_parent"
+            android:padding="@dimen/global_margin_small">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_log"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </HorizontalScrollView>
+
+        <TextView
+            android:id="@+id/tv_top_activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:textColor="@color/log_content"
+            tools:text="com.ttdevs.demo/.SecondActivity" />
+
+    </RelativeLayout>
+
+</merge>

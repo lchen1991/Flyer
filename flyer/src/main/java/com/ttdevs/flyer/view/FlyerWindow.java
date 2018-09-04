@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -111,6 +112,8 @@ public class FlyerWindow extends LinearLayout {
     }
 
     private void initView() {
+        setOrientation(LinearLayout.VERTICAL);
+        setBackgroundResource(R.color.bg_black);
         inflate(mContext, R.layout.layout_flyer_window, this);
 
         viewIcon = findViewById(R.id.view_icon);
